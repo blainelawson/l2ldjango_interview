@@ -10,7 +10,7 @@ def l2l_dt(value):
 
     # Filter returns the date in this format: "%Y-%m-%d %H:%M:%S"
     # Result will appear similiar to "2024-06-25 11:10:32"
-    
+
     time_format = "%Y-%m-%d %H:%M:%S"
     return_value = None
 
@@ -21,7 +21,10 @@ def l2l_dt(value):
     if type(value) is str:
         # Convert string to datetime object before converting back to string in 
         # desired format
-        return_value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
+        try:
+            return_value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
+        except ValueError as err:
+            raise ValueError(f"Error converting '{value}' to datetime with format '%Y-%m-%dT%H:%M:%S': {err}")
     else:
         # Value is already a datetime object, leave as is
         return_value = value
